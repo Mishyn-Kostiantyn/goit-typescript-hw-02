@@ -1,0 +1,8 @@
+.photoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  column-gap: 25px;
+  list-style: none;
+  justify-content: center;
+}

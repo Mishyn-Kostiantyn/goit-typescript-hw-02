@@ -1,0 +1,22 @@
+.loadMoreButton {
+  border-radius: 8px;
+  height: 40px;
+  background: #289f1bab;
+  padding: 8px 16px;
+  border: solid 1px rgb(141, 179, 181);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: 0.64px;
+  color: #fff;
+  transition: background 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: transparent;
+}
+.loadMoreButton:hover {
+  background: #03562e;
+}
+.loadMoreButton:focus {
+  outline: none;
+}
