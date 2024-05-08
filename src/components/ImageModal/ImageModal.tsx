@@ -1,7 +1,14 @@
-import React from 'react';
+import {FC} from 'react';
 import css from './ImageModal.module.css'; 
 import ReactModal from 'react-modal';
-const ImageModal = ({isOpen,handleCloseModal,selectedPhoto}) => {
+import { PhotoCard } from '../../Types';
+
+interface ImageModalProps {
+  isOpen: boolean;
+  handleCloseModal: () => void;
+  selectedPhoto: Pick<PhotoCard,'urls'|'alt_description'>;
+}
+const ImageModal : FC<ImageModalProps>= ({isOpen,handleCloseModal,selectedPhoto}) => {
   return (
     <div><ReactModal 
            isOpen={isOpen}

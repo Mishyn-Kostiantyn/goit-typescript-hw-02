@@ -9,26 +9,33 @@ import toast, { Toaster } from 'react-hot-toast';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageModal from './components/ImageModal/ImageModal.tsx';
 import ReactModal from 'react-modal';
+import { AxiosResponse } from 'axios';
+import { PhotoCard } from './Types.ts';
 function App() {
-  const [query, setQuery] = useState('');
-  const [photos, setPhotos] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [totalPageNumber, setTotalPageNumber] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [query, setQuery] = useState<string>('');
+  const [photos, setPhotos] = useState<object|null>(null);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [totalPageNumber, setTotalPageNumber] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoCard|null>(null);
 ReactModal.setAppElement('#root');
-  const onSetQuery = (queryWord) => {
+  const onSetQuery = (queryWord: string): void => {
     setQuery(queryWord); setPageNumber(1); setTotalPageNumber(0); setPhotos(null); 
   };
-  const onSetPageNumber = () => { setPageNumber(pageNumber + 1);  }
+  const onSetPageNumber = (): void => { setPageNumber(pageNumber + 1); };
+  interface ServerResponse{
+    total_pages: number;
+    results: object[];
+
+  }
   useEffect(() => {
     if (query.length === 0) return;
-    async function fetchPhotoGallery() {
+    async  function fetchPhotoGallery():Promise<void> {
       try {
         setIsLoading(true);
-        const data = await requestImageGallery(query, pageNumber);
+        const data:ServerResponse = await requestImageGallery(query, pageNumber);
 
         setTotalPageNumber(data.total_pages);
         if (data.results && data.results.length > 0) {
@@ -46,8 +53,8 @@ ReactModal.setAppElement('#root');
     }
     fetchPhotoGallery();
   }, [query, pageNumber]);
-  const handleCloseModal = () => { setModalIsOpen(false); }
-  const handleImageClick = (photo) => { setSelectedPhoto(photo); setModalIsOpen(true); }
+  const handleCloseModal = () :void=> { setModalIsOpen(false); }
+  const handleImageClick = (photo: PhotoCard): void => { setSelectedPhoto(photo); setModalIsOpen(true); }
   return (
     <>
       <div className='container'>
