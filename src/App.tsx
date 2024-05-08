@@ -10,7 +10,8 @@ import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import ImageModal from './components/ImageModal/ImageModal.tsx';
 import ReactModal from 'react-modal';
 import { AxiosResponse } from 'axios';
-import { PhotoCard } from './Types.ts';
+import { PhotoCard } from './Types';
+import { ServerResponse } from './Types';
 function App() {
   const [query, setQuery] = useState<string>('');
   const [photos, setPhotos] = useState<object|null>(null);
@@ -25,11 +26,7 @@ ReactModal.setAppElement('#root');
     setQuery(queryWord); setPageNumber(1); setTotalPageNumber(0); setPhotos(null); 
   };
   const onSetPageNumber = (): void => { setPageNumber(pageNumber + 1); };
-  interface ServerResponse{
-    total_pages: number;
-    results: object[];
-
-  }
+  
   useEffect(() => {
     if (query.length === 0) return;
     async  function fetchPhotoGallery():Promise<void> {
@@ -37,13 +34,14 @@ ReactModal.setAppElement('#root');
         setIsLoading(true);
         const data:ServerResponse = await requestImageGallery(query, pageNumber);
 
-        setTotalPageNumber(data.total_pages);
+       setTotalPageNumber(data.total_pages);
         if (data.results && data.results.length > 0) {
           setPhotos(prevPhotos => {
             if (!Array.isArray(prevPhotos)) {
+              console.log(data.results);
               return data.results;
             }
-            return [...prevPhotos, ...data.results];
+            return [...prevPhotos, data.results];
           
           })
         } else { toast('Sorry, there are no images matching your search query. Please try again with anover search term!'); }

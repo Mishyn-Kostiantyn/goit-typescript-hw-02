@@ -2,8 +2,8 @@ import React, { FC} from 'react'
 import css from './ImageCard.module.css';
 import { PhotoCard } from '../../Types';
 interface ImageCardProps {
-  photo: Pick<PhotoCard, 'urls' | 'alt_description'>;
-  handleImageClick: (photo: object) => void;
+  photo: PhotoCard;
+  handleImageClick: (photo: PhotoCard) => void;
 }
 const ImageCard : FC<ImageCardProps> = ({ photo, handleImageClick }) => {
   const handleClick = () => { handleImageClick(photo);}
