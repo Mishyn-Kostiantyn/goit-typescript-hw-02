@@ -41,7 +41,7 @@ ReactModal.setAppElement('#root');
               console.log(data.results);
               return data.results;
             }
-            return [...prevPhotos, data.results];
+            return [...prevPhotos, ...data.results];
           
           })
         } else { toast('Sorry, there are no images matching your search query. Please try again with anover search term!'); }
